@@ -1,22 +1,75 @@
-# Cryptic-Messenger
+### **📌 Cryptic Messenger - Secure Message Encryption & Decryption**  
 
-CrypticMessenger offers a simple yet effective solution for encrypting and decrypting messages, ensuring privacy and confidentiality. With its intuitive interface, users can easily encode their messages before sending and decode received messages for secure communication.
+Cryptic Messenger is a **lightweight and secure encryption tool** that lets users **encrypt and decrypt messages** easily using a custom encryption algorithm. It provides a **simple GUI interface** built with **Tkinter**, ensuring **user-friendly and hassle-free encryption**.
 
-## Features
+---
 
-- **Encryption:** Encrypt messages using a custom algorithm and key.
-- **Decryption:** Decrypt encrypted messages to retrieve the original content.
-- **Secure Communication:** Safeguard sensitive information during transmission.
-- **User-Friendly Interface:** Easy-to-use program for encoding and decoding messages.
+## **🚀 Features**
+✔ **Encrypt Messages** → Convert plain text into unreadable ciphertext  
+✔ **Decrypt Messages** → Retrieve the original message from encrypted text  
+✔ **Copy to Clipboard** → Easily copy encrypted or decrypted messages  
+✔ **User-Friendly Interface** → Simple and interactive GUI with easy-to-use buttons  
+✔ **Message Length Restriction** → Supports messages up to **999 characters**  
+✔ **Automatic Input Filtering** → Removes unsupported characters before encryption  
 
-## How It Works
+---
 
-CrypticMessenger utilizes a custom encryption algorithm and key to transform plain text messages into unreadable ciphertext. The encrypted message can then be safely transmitted to the intended recipient. Upon receiving the encrypted message, the recipient can use the same program and key to decrypt the ciphertext and retrieve the original content.
+## **📸 Interface Preview**
+🔹 **Main Window**  
+> Users can enter a message and choose either **Encrypt** or **Decrypt** options.  
 
-## Dependencies
+🔹 **Encryption Screen**  
+> Encrypted text appears in a **copyable text box** for easy sharing.  
 
-CrypticMessenger requires Python to run. No additional dependencies are needed.
+🔹 **Decryption Screen**  
+> Users can enter an encrypted message to retrieve the original text.  
 
-## Contributions
+---
 
-Contributions to CrypticMessenger are welcome! If you have suggestions for improvements or new features, feel free to fork the repository and submit a pull request with your changes.
+## **📥 Installation & Requirements**
+### **🔹 Dependencies**
+Make sure you have **Python 3.x** installed.  
+You also need the following Python libraries:  
+```bash
+pip install tk
+```
+
+---
+
+## **💡 How to Use**
+1️⃣ **Run the script**  
+```bash
+python Encryption_Decryption_Algorithm.py
+```
+2️⃣ **Enter your message** in the input box  
+3️⃣ Click **"Encrypt"** to generate an encrypted message  
+4️⃣ Click **"Decrypt"** to decode a previously encrypted message  
+5️⃣ Click **"Copy to Clipboard"** to copy the result  
+6️⃣ Click **"Exit"** to close the application  
+
+---
+
+## **🛡 Security & Limitations**
+✔ **Custom Encryption Algorithm**  
+✔ **No Internet Required - 100% Offline**  
+✔ **Max 999 characters per message**  
+
+🔹 **Note:** This is a simple encryption practice project and should not be used for highly sensitive data.
+
+---
+
+## **🛠 Future Improvements**
+✅ Add **password-based encryption**  
+✅ Implement **file encryption** support  
+✅ Support for **larger messages**  
+
+---
+
+## **📜 License**
+This project is open-source and free to use.  
+
+---
+
+### **📢 Contribute & Feedback**
+Feel free to **fork the repository** and **suggest improvements**.  
+If you find a bug or have ideas for new features, **open an issue**! 🚀  

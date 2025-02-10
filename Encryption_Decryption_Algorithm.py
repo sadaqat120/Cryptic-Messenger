@@ -1,6 +1,7 @@
 import random
 import string
-
+import tkinter as tk
+from tkinter import messagebox
 
 Key=[
     ['Y', ')', 'e', '~', '.', '$', 'O', 6, 'R', '=', 'S', '(', 'J', 0, 'u', 7, '>', 'A', 'z', 'r', 'K', 'H', 'I', 1, 's', '^', 'P', 'g', 'n', 5, 'l', '?', 'W', 'x', '\\', 'Q', 'L', 'M', '*', ':', 'E', 'D', 'f', '@', '|', 'U', '{', 'k', 'b', '+', 2, 'C', 'o', 'V', 'Z', 'N', ']', ';', 'X', 8, ' ', 'v', 'y', '%', '!', 'c', '_', 4, '/', 'w', 'q', '&', '"', 'm', 'i', 'G', '#', '-', 'p', 'T', 'a', 't', 'h', '`', 'd', 'j', 9, 'B', '}', "'", 'F', 3, '<', '[', ','],
@@ -76,8 +77,11 @@ def decrypt(encrypted_message, key):
     
     splitted_message = encrypted_message.split()
     message_numbers= splitted_message[-1]
-    index_for_messageNumber=key[0].index(message_numbers[-1])
-    messageNumber = int(key[0][(index_for_messageNumber-5)%len(key[0])])
+    try:
+        index_for_messageNumber=key[0].index(message_numbers[-1])
+        messageNumber = int(key[0][(index_for_messageNumber-5)%len(key[0])])
+    except:
+        return "This message is not encrypted from our Cryptic Messenger !"
 
     flag=True
     count2_for_random=2
@@ -104,7 +108,10 @@ def decrypt(encrypted_message, key):
         else:
             
             if flag is False:
-                message_length=int(message_length)
+                try:
+                    message_length=int(message_length)
+                except:
+                    return "This message is not encrypted from our Cryptic Messenger !"
                 key_list_for_keyNumber=key[message_length%key_length]
                 find_keyNumber_from_lengthBasedList=key_list_for_keyNumber.index(key_list)
                 encrypted_key_listIndex = str(key_list_for_keyNumber[(find_keyNumber_from_lengthBasedList-message_length)
@@ -122,16 +129,109 @@ def decrypt(encrypted_message, key):
 
 
 # Get user input
-original_message = input("Enter your message: ")
+# original_message = input("Enter your message: ")
 
-# Print results
+# # Print results
 
-# Encrypt the message
-encrypted_message = encrypt(original_message, Key)
-print("-----------------------------------------------")
-print("Encrypted Message: ", encrypted_message)
-print("-----------------------------------------------")
-# Decrypt the message
-decrypted_message = decrypt(encrypted_message, Key)
-print("Decrypted Message: ", decrypted_message)
-print("-----------------------------------------------")
+# # Encrypt the message
+# encrypted_message = encrypt(original_message, Key)
+# print("-----------------------------------------------")
+# print("Encrypted Message: ", encrypted_message)
+# print("-----------------------------------------------")
+# # Decrypt the message
+# decrypted_message = decrypt(encrypted_message, Key)
+# print("Decrypted Message: ", decrypted_message)
+# print("-----------------------------------------------")
+
+
+def main():
+    def encrypt_message():
+        user_input = input_entry.get()
+        if not user_input:
+            messagebox.showwarning("Warning", "Please enter a message to encrypt!")
+            return
+        if len(user_input) > 999:
+            messagebox.showerror("Error", "Message too long! Maximum length is 999 characters.")
+            return
+        
+        filtered_input = "".join(c for c in user_input if c.isprintable())  # Remove unsupported characters
+
+        encrypted_text = encrypt(filtered_input, Key)
+        result_textbox.config(state=tk.NORMAL)
+        result_textbox.delete("1.0", tk.END)
+        result_textbox.insert(tk.END, encrypted_text)
+        result_textbox.config(state=tk.DISABLED)
+
+    def decrypt_message():
+        user_input = input_entry.get()
+        if not user_input:
+            messagebox.showwarning("Warning", "Please enter an encrypted message to decrypt!")
+            return
+        
+        if len(user_input) > 999:
+            messagebox.showerror("Error", "Message too long! Maximum length is 999 characters.")
+            return
+        
+        filtered_input = "".join(c for c in user_input if c.isprintable())  # Remove unsupported characters
+        
+        decrypted_text = decrypt(filtered_input, Key)
+        result_textbox.config(state=tk.NORMAL)
+        result_textbox.delete("1.0", tk.END)
+        result_textbox.insert(tk.END, decrypted_text)
+        result_textbox.config(state=tk.DISABLED)
+
+    def copy_to_clipboard():
+        result_text = result_textbox.get("1.0", tk.END).strip()
+        if result_text:
+            root.clipboard_clear()
+            root.clipboard_append(result_text)
+            root.update()
+            messagebox.showinfo("Copied", "Message copied to clipboard!")
+
+    def clear_input():
+        input_entry.delete(0, tk.END)
+        result_textbox.config(state=tk.NORMAL)
+        result_textbox.delete("1.0", tk.END)
+        result_textbox.config(state=tk.DISABLED)
+
+    # Create Main Window
+    root = tk.Tk()
+    root.title("Cryptic Messenger")
+    root.geometry("500x450")
+    root.configure(bg="#282c34")
+
+    # Heading Label
+    title_label = tk.Label(root, text="🔒 Cryptic Messenger 🔒", font=("Arial", 16, "bold"), fg="white", bg="#282c34")
+    title_label.pack(pady=10)
+
+    # Input Field
+    input_entry = tk.Entry(root, font=("Arial", 14), width=40, bd=2)
+    input_entry.pack(pady=10)
+
+    # Encrypt & Decrypt Buttons
+    button_frame = tk.Frame(root, bg="#282c34")
+    button_frame.pack()
+
+    encrypt_button = tk.Button(button_frame, text="Encrypt", font=("Arial", 12, "bold"), command=encrypt_message, bg="#4CAF50", fg="white", padx=20, pady=5)
+    encrypt_button.grid(row=0, column=0, padx=10)
+
+    decrypt_button = tk.Button(button_frame, text="Decrypt", font=("Arial", 12, "bold"), command=decrypt_message, bg="#f44336", fg="white", padx=20, pady=5)
+    decrypt_button.grid(row=0, column=1, padx=10)
+
+    # Result Text Box (for copyable text)
+    result_textbox = tk.Text(root, font=("Arial", 12), height=4, width=50, wrap="word", state=tk.DISABLED)
+    result_textbox.pack(pady=10)
+
+    # Copy to Clipboard Button
+    copy_button = tk.Button(root, text="Copy to Clipboard", font=("Arial", 12, "bold"), command=copy_to_clipboard, bg="#2196F3", fg="white", padx=10, pady=5)
+    copy_button.pack()
+
+    # Exit Button
+    exit_button = tk.Button(root, text="Exit", font=("Arial", 12, "bold"), command=root.quit, bg="#ff9800", fg="white", padx=20, pady=5)
+    exit_button.pack(side="bottom", pady=10)
+
+    root.mainloop()
+
+# Run the main function
+if __name__ == "__main__":
+    main()
